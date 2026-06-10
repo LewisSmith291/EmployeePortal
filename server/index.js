@@ -14,6 +14,18 @@ const PORT = process.env.PORT || 3000;
 // The callback inline function runs when the server is up
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
+// Temp for testing the connection
+const pool = require('./config/db');
+
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('Database connection failed:', err);
+  } else {
+    console.log('Database connected at:', res.rows[0].now);
+  }
+});
+
+
 // Request comes in
 // Express checks which router handles that URL
 // Router calls the right controller function
