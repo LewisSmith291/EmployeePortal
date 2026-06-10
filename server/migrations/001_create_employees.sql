@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS employees (
+  id SERIAL PRIMARY KEY,
+  first_name VARCHAR(100) NOT NULL,
+  last_name VARCHAR(100) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  department VARCHAR(100),
+  role VARCHAR(100),
+  created_at TIMESTAMP DEFAULT NOW()
+);
