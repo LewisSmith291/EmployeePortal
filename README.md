@@ -3,6 +3,8 @@ This is a full-stack employee portal built using React, Node.js and PostgreSQL.
 
 https://lewis-smith-employee-portal.netlify.app/
 
+<img src='./src/assets/Empolyee_portal_sc.png'/>
+
 # Tech Stack
 To make this application, I have used React, Vite, Node.js, Express, PostgreSQL, Neon, Render and Netlify.
 
