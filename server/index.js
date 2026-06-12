@@ -1,11 +1,34 @@
 require('dotenv').config();
 const express = require('express');
+
+const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
+
 const employeeRoutes = require('./routes/employeeRoutes');
 const authenticationRouter = require('./routes/authentication');
+
 
 const app = express();
 app.use(express.json());
 
+//
+app.use(session({
+  // store express-session to database "session" table instead of server
+  store: new pgSession({ pool }),
+  secret: process.env.SESSION_SECRET,
+  // Don't flood database with sessions
+  resave: false,
+  // Only save session  once logged on
+  saveUninitialized: false,
+  cookie: {
+    // Cookie cant be read by JS
+    httpOnly: true,
+    // allows sending of cookie in production environment, but apart from that requires https 
+    secure: process.env.NODE_ENV === 'production',
+    // 8h sesion
+    maxAge: 1000 * 60 * 60 * 8,
+  } 
+}));
 
 // Mounts employee router at the '/api/employees' path
 app.use('/api/employees', employeeRoutes);
