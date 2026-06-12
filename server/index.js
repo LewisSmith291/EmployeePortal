@@ -9,6 +9,9 @@ const authRouter = require('./routes/auth');
 
 const app = express();
 
+// Temp for testing the connection
+const pool = require('./config/db');
+
 // New session
 app.use(session({
   // store express-session to database "session" table instead of server
@@ -42,8 +45,6 @@ const PORT = process.env.PORT || 3000;
 // The callback inline function runs when the server is up
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-// Temp for testing the connection
-const pool = require('./config/db');
 
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
