@@ -7,6 +7,7 @@ const pgSession = require('connect-pg-simple')(session);
 const employeeRoutes = require('./routes/employeeRoutes');
 const authRouter = require('./routes/auth');
 
+const app = express();
 
 // New session
 app.use(session({
@@ -27,9 +28,7 @@ app.use(session({
   } 
 }));
 
-const app = express();
 app.use(express.json());
-
 
 // Mounts employee router at the '/api/employees' path
 app.use('/api/employees', employeeRoutes);
