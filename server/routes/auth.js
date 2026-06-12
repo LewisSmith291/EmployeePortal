@@ -4,7 +4,9 @@ const bcrypt = require('bcrypt');
 const pool = require('../db');
 
 // Generate random bcrypt hash every server startup
-const DUMMY_HASH = await bcrypt.hash('dummy', 10);
+//const DUMMY_HASH = await bcrypt.hash('dummy', 10);
+// Replaced as previous was causing build error
+const DUMMY_HASH = '$2b$10$abcdefghijklmnopqrstuuABCDEFGHIJKLMNOPQRSTUVWXYZ012345';
 
 router.post('/login', async (req,res) => {
   // const username = req.body.username
