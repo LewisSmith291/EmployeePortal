@@ -1,4 +1,4 @@
-require('dotenv').config();
+const dotenv = require('dotenv').config();
 const express = require('express');
 
 const session = require('express-session');
@@ -11,7 +11,7 @@ const authenticationRouter = require('./routes/authentication');
 const app = express();
 app.use(express.json());
 
-//
+// New session
 app.use(session({
   // store express-session to database "session" table instead of server
   store: new pgSession({ pool }),
