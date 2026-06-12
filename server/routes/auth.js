@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const pool = require('./config/db');
+const pool = require('../../config/db');
 
 // Generate random bcrypt hash every server startup
 //const DUMMY_HASH = await bcrypt.hash('dummy', 10);
