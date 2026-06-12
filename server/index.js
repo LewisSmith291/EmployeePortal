@@ -5,11 +5,8 @@ const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 
 const employeeRoutes = require('./routes/employeeRoutes');
-const authenticationRouter = require('./routes/authentication');
+const authRouter = require('./routes/auth');
 
-
-const app = express();
-app.use(express.json());
 
 // New session
 app.use(session({
@@ -30,11 +27,15 @@ app.use(session({
   } 
 }));
 
+const app = express();
+app.use(express.json());
+
+
 // Mounts employee router at the '/api/employees' path
 app.use('/api/employees', employeeRoutes);
 
-// Mountes authentication router at the '/api/auth' path
-app.use('/api/auth', authenticationRouter);
+// Mounts authentication router at the '/api/auth' path
+app.use('/api/auth', authRouter);
 
 // Reads port from env file and if it cant find one, falls back onto 3000
 const PORT = process.env.PORT || 3000;
