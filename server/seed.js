@@ -25,6 +25,8 @@ const empolyees = [
 const seed = async () => {
   for (const emp of employees){
     // Insert employees
+    // Placeholders ($1,$2, etc.) are used to prevent SQL injection
+    // RETURNING id tells Postgres to send back the auto-generated ID since it is needed for next step
     const result = await pool.query(
       `INSERT INTO employees (first_name, last_name, email, department, role)
       VALUES ($1, $2, $3, $4, $4)
@@ -34,8 +36,9 @@ const seed = async () => {
     const employeeID = result.rows[0].id;
 
     // Hash password
-    // salt adds a number of random charaters to the password to make identical passwords not look identical in database
+    // (cost factor)/salt rounds adds a number of random charaters to the password to make identical passwords not look identical in database
     const saltRounds = 12;
+    // bcrypt.hash uses one-way hashing algorithm so you can only check if given password matches hash
     const passwordHash = await bcrypt.hash(emp.password, saltRounds);
 
     await pool.query(
@@ -47,6 +50,7 @@ const seed = async () => {
     console.log(`Seeded: ${emp.email}`);
   }
 
+  // Close db connetcion
   pool.end();
 };
 
