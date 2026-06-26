@@ -13,6 +13,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "migrate": "node migrate.js"
+    "migrate": "node migrate.js",
+    "seed": "node seed.js"
   }
 }
