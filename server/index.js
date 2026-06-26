@@ -7,10 +7,24 @@ const pgSession = require('connect-pg-simple')(session);
 const employeeRoutes = require('./routes/employeeRoutes');
 const authRoutes = require('./routes/auth');
 
+// CORS needed since backend and frontend are hosted on different platforms
+const cors = require('cors');
+
 const app = express();
 
 // Temp for testing the connection
 const pool = require('./config/db');
+
+// so sessions work in production as http will probably be used instead of https
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1);
+};
+
+// CORS needs to approve the request before it reaches session handling / route
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+}));
 
 // New session
 app.use(session({
