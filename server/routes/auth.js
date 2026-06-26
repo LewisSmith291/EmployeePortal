@@ -6,14 +6,15 @@ const pool = require('../config/db');
 router.post('/login', async (req,res) => {
   // const username = req.body.username
   // const password = req.body.password
-  const {username, password} = req.body;
+  const {email, password} = req.body;
 
   // Send response explaining both a username and password are required to login
-  if (!username || !password) {
+  if (!email || !password) {
     return res.status(400).json({message: "Username and password are required"});
   }
 
   try {
+    // Join credentials and employees information into one result
     const result = await pool.query(
       `SELECT e.id, e.first_name, e.last_name, e.email, e.department, e.role, e.password_hash
       FROM employees e
@@ -23,14 +24,13 @@ router.post('/login', async (req,res) => {
     );
 
     const employee = result.rows[0];
-
-    // generalise load times to hide valid passwords
-    const match = await bcrypt.compare(password,hash);
   
+    // If no employee was found with this email, give error
     if (!employee){
       return res.status(401).json({ error: "Invalid email or password." });
     }
 
+    // generalise load times to hide valid passwords
     const match = await bcrypt.compare(password, employee.password_hash);
     if(!match){
       return res.status(401).json({ error: "Invalid email or password."});
@@ -40,6 +40,7 @@ router.post('/login', async (req,res) => {
     req.session.employeeID = employee.id;
     req.session.role = employee.role;
 
+    // Send json response back to fontend wih empolyees non-sensitive information
     res.json({
       id: employee.id,
       firstName: employee.first_name,
@@ -49,6 +50,7 @@ router.post('/login', async (req,res) => {
       role: employee,role,
     });
   } catch {
+    // If anything unexpected fails, send a general error
     console.error("Login error:",err);
     return res.status(500).json({message: "Server error. Please try again"});
   }
