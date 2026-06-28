@@ -21,7 +21,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/api/auth/login`, {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         credentials: "include", // sends/recieves sesison cookie cross origin
