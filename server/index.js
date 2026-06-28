@@ -50,6 +50,8 @@ app.use(session({
     secure: process.env.NODE_ENV === 'production',
     // 8h sesion
     maxAge: 1000 * 60 * 60 * 8,
+    //Cross site rules preventing phones from making request since netlify and render are seperate sites
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
   } 
 }));
 

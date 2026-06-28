@@ -16,8 +16,6 @@ function App() {
   // Checks to see if still waiting to hear back from /me on initial load
   const [checkingSession, setCheckingSession] = useState(true);
 
-
-
   // Empty dependency array causes it to run once page loads
   useEffect(() => {
     // HTTP Request
@@ -31,10 +29,12 @@ function App() {
       if (!res.ok) throw new Error("Not authenticated");
       return res.json();
     })
-    .then((data) => setCurrentUser(data)) // If no error, store session in currentUser
-    .catch(() => setCurrentUser(null)) // If there is an error, set currentUser to null
+    .then((data) => {
+      setCurrentUser(data)
+    }) // If no error, store session in currentUser
+    .catch((reason) => {
+      setCurrentUser(null)}) // If there is an error, set currentUser to null
     .finally(() => {
-      console.log(currentUser);
       setCheckingSession(false)}); // Finish session checking
   }, []);
 
@@ -102,7 +102,7 @@ function App() {
   }
 
   // Logged in user sees portal and greeting message
-  if (currentUser !== null){
+  if (currentUser){
     return (
       <div>
         <h1>Welcome, <CurrentUser currentUser={currentUser}/></h1>
