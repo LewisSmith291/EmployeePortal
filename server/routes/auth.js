@@ -16,7 +16,7 @@ router.post('/login', async (req,res) => {
   try {
     // Join credentials and employees information into one result
     const result = await pool.query(
-      `SELECT e.id, e.first_name, e.last_name, e.email, e.department, e.role, e.password_hash
+      `SELECT e.id, e.first_name, e.last_name, e.email, e.department, e.role, c.password_hash
       FROM employees e
       JOIN credentials c ON c.employee_id = e.id
       WHERE e.email = $1`,
