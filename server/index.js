@@ -20,9 +20,17 @@ if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
 };
 
+// Allow origin with development url
+const allowedOrigins = [ "http://localhost:5173", "https://lewis-smith-employee-portal.netlify.app"];
 // CORS needs to approve the request before it reaches session handling / route
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: function(origin, callback){
+    if (!origin || allowedOrigins.includes(origin)){
+      callback(null,true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
 

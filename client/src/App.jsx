@@ -3,13 +3,50 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const API_URL = import.meta.env.VITE_API_URL;
+  console.log(API_URL);
 
   async function handleLogin() {
-    
+    setError("");
+
+    if(!username || !password){
+      setError("please enter a username and password");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        credentials: "include", // sends/recieves sesison cookie cross origin
+        body: JSON.stringify({username,password})
+      });
+
+      if (!response.ok){
+        // Don't reveal if username or password was wrong
+        setError("Invalid username or password");
+        setLoading(false);
+        return;
+      }
+
+      const data = await response.json();
+      console.log("Logged in as:", data);
+
+      // TODO: redirect to portal home page, or lift this into some app-level "currentUser" state once you have routing set up
+
+    } catch (err) {
+      console.error(err);
+      setError("Something went wrong. Please try again");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -29,21 +66,22 @@ function App() {
             <div id="gap2" className="gap"style={{height:"5vh"}}></div>
             <div id="inputs">
               <p>USERNAME</p>
-              <input id="username" className="text-input" placeholder="Username" type="text"/>
+              <input id="username" className="text-input" placeholder="Username" type="text" value={username} onChange={(e)=>setUsername(e.target.value)}/>
               <p>PASSWORD</p>
-              <input id="password" className="text-input" placeholder="Password" type="text"/>
+              <input id="password" className="text-input" placeholder="Password" type="text" value={password} onChange={(e)=>setPassword(e.target.value)}/>
             </div>
             <div id="buttons">
               <button
                 type="button"
                 className="button"
-                onClick={() => handleLogin()}
-              >Login
+                onClick={handleLogin}
+                disabled={loading}
+              >{loading ? "Logging in":"Login"}
               </button>
               <button
                 type="button"
                 className="button"
-                onClick={() => handleLogin()}
+                disabled={loading}
               >Forgot Password
               </button>
             </div>
