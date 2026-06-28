@@ -62,6 +62,8 @@ function App() {
       const data = await response.json();
       console.log("Logged in as:", data);
 
+      setCurrentUser(data);
+
       // TODO: redirect to portal home page, or lift this into some app-level "currentUser" state once you have routing set up
 
     } catch (err) {
@@ -96,11 +98,12 @@ function App() {
   }
 
   // Logged in user sees portal and greeting message
-  if (currentUser){
+  if (currentUser !== null){
     return (
       <div>
-        <h1>Welcome, {currentUser.role}</h1>
+        <h1>Welcome, {currentUser.first_name}</h1>
         <button onClick={handleLogout}>Logout</button>
+        <CurrentUser currentUser={currentUser}/>
       </div>
     );
   }
@@ -143,9 +146,16 @@ function App() {
               >Forgot Password
               </button>
             </div>
+            <CurrentUser currentUser={currentUser}/>
         </div>
       </section>
     </div>
+  )
+}
+
+function CurrentUser({currentUser}) {
+  return (
+    <p>{{currentUser} ? "not logged in" : {currentUser}.id}</p>
   )
 }
 
