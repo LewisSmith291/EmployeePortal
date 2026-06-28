@@ -3,6 +3,11 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const pool = require('../config/db');
 
+// This contains the router export. When a request is made to the web server it is processed by the router object.
+// The router can post requests and make routes that the user can visit which gives them certain responses.
+// The path is the address of post, but a body using request and response variables allows code execution upon arriving at a route. 
+
+// Address of post
 router.post('/login', async (req,res) => {
   // const username = req.body.username
   // const password = req.body.password
@@ -65,10 +70,38 @@ router.post('/logout', (req,res) => {
 });
 
 router.get("/me", (req,res) => {
+  // Session check to see if the sesion has an employeeID, as otherwise there is no reason to query database
   if (!req.session.employeeID){
     return res.status(401).json({ error: "Not authenticated" });
   }
-  res.json({ employeeID: req.session.employeeID, role: req.session.role})
+
+  try {
+    const result = await pool.query(
+      `SELECT id, first_name, last_nmae, email, department, role
+      FROM employees
+      WHERE id = $1`,
+      [req.session.employeeID]
+    );
+
+    const employee = result.rows[0];
+
+    // If employee gets deleted while logged in
+    if (!empolyee){
+      return res.status(401).json({ error: "Not authenticated"});
+    }
+
+    res.json({
+      id: employee.id,
+      firstName: employee.first_name,
+      lastName: employee.last_name,
+      email: employee.email,
+      department: employee.department,
+      role: employee.role
+    });
+  } catch(err) {
+    console.error("Me error:", err);
+    res.status(500).json({message: "Server error. Please try again"});
+  }
 });
 
 module.exports = router;
