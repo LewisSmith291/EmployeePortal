@@ -79,8 +79,7 @@ function App() {
   if (currentUser){
     return (
       <div>
-        <h1>Welcome, {currentUser.name}</h1>
-
+        <h1>Welcome, {currentUser.role}</h1>
       </div>
     );
   }
