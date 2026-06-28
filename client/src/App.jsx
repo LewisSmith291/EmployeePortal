@@ -16,6 +16,8 @@ function App() {
   // Checks to see if still waiting to hear back from /me on initial load
   const [checkingSession, setCheckingSession] = useState(true);
 
+
+
   // Empty dependency array causes it to run once page loads
   useEffect(() => {
     // HTTP Request
@@ -31,7 +33,9 @@ function App() {
     })
     .then((data) => setCurrentUser(data)) // If no error, store session in currentUser
     .catch(() => setCurrentUser(null)) // If there is an error, set currentUser to null
-    .finally(() => setCheckingSession(false)); // Finish session checking
+    .finally(() => {
+      console.log(currentUser);
+      setCheckingSession(false)}); // Finish session checking
   }, []);
 
   async function handleLogin() {
@@ -101,9 +105,8 @@ function App() {
   if (currentUser !== null){
     return (
       <div>
-        <h1>Welcome, {currentUser.first_name}</h1>
+        <h1>Welcome, <CurrentUser currentUser={currentUser}/></h1>
         <button onClick={handleLogout}>Logout</button>
-        <CurrentUser currentUser={currentUser}/>
       </div>
     );
   }
@@ -146,7 +149,6 @@ function App() {
               >Forgot Password
               </button>
             </div>
-            <CurrentUser currentUser={currentUser}/>
         </div>
       </section>
     </div>
@@ -154,9 +156,10 @@ function App() {
 }
 
 function CurrentUser({currentUser}) {
-  return (
-    <p>{{currentUser} ? "not logged in" : {currentUser}.id}</p>
-  )
+  if (currentUser){
+    return currentUser.firstName + " " + currentUser.lastName;
+  }
+  return "";
 }
 
 export default App
