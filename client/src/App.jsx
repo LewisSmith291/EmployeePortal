@@ -3,7 +3,7 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -13,8 +13,8 @@ function App() {
   async function handleLogin() {
     setError("");
 
-    if(!username || !password){
-      setError("please enter a username and password");
+    if(!email || !password){
+      setError("please enter an email and password");
       return;
     }
 
@@ -25,12 +25,12 @@ function App() {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         credentials: "include", // sends/recieves sesison cookie cross origin
-        body: JSON.stringify({username,password})
+        body: JSON.stringify({email,password})
       });
 
       if (!response.ok){
-        // Don't reveal if username or password was wrong
-        setError("Invalid username or password");
+        // Don't reveal if email or password was wrong
+        setError("Invalid email or password");
         setLoading(false);
         return;
       }
@@ -64,8 +64,8 @@ function App() {
             </div>
             <div id="gap2" className="gap"style={{height:"5vh"}}></div>
             <div id="inputs">
-              <p>USERNAME</p>
-              <input id="username" className="text-input" placeholder="Username" type="text" value={username} onChange={(e)=>setUsername(e.target.value)}/>
+              <p>EMAIL</p>
+              <input id="email" className="text-input" placeholder="Email" type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
               <p>PASSWORD</p>
               <input id="password" className="text-input" placeholder="Password" type="text" value={password} onChange={(e)=>setPassword(e.target.value)}/>
             </div>

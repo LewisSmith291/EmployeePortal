@@ -47,9 +47,9 @@ router.post('/login', async (req,res) => {
       lastName: employee.last_name,
       email: employee.email,
       department: employee.department,
-      role: employee,role,
+      role: employee.role,
     });
-  } catch {
+  } catch (err){
     // If anything unexpected fails, send a general error
     console.error("Login error:",err);
     return res.status(500).json({message: "Server error. Please try again"});
