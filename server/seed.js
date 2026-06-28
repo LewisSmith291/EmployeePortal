@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const pool = require("./config/db.js");
 
 // Password field is plaintext use in this script to generate the hash, but is never stored in database
-const empolyees = [
+const employees = [
   { 
     first_name: "Lewis",
     last_name: "Smith",
@@ -28,8 +28,8 @@ const seed = async () => {
     // Placeholders ($1,$2, etc.) are used to prevent SQL injection
     // RETURNING id tells Postgres to send back the auto-generated ID since it is needed for next step
     const result = await pool.query(
-      `INSERT INTO employees (first_name, last_name, email, department, role)
-      VALUES ($1, $2, $3, $4, $4)
+      `INSERT INTO employees(first_name, last_name, email, department, role)
+      VALUES ($1, $2, $3, $4, $5)
       RETURNING id`,
       [emp.first_name, emp.last_name, emp.email, emp.department, emp.role]
     );
@@ -43,7 +43,7 @@ const seed = async () => {
 
     await pool.query(
       `INSERT INTO credentials (employee_id, password_hash)
-      VALUES ($1, %2)`,
+      VALUES ($1, $2)`,
       [employeeID, passwordHash]
     );
 
