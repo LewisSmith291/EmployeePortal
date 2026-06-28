@@ -18,6 +18,8 @@ function App() {
 
   // Empty dependency array causes it to run once page loads
   useEffect(() => {
+    // HTTP Request
+    // String url as first parameter, and parameters as second parameter
     fetch(`${API_URL}/me`, {
       credentials: "include",
     })
@@ -69,10 +71,28 @@ function App() {
       setLoading(false);
     }
   }
+  
+  async function handleLogout(){
+    try {
+      await fetch(`${API_URL}/logout`,{
+        method: "POST",
+        credentials:"include", 
+      });
+    } catch(err) {
+      console.error("Logout error:",err);
+    } finally {
+      // Log out straight away manually whether success or catch so not slow
+      setCurrentUser(null);
+    }
+  }
 
   // Only render Loading text while checking for session, instead of login screen flashing for user if signed in already
   if (checkingSession){
-    return <p>Loading...</p>;
+    return (
+      <div id="loading-text-container">
+        <p id="loading">Loading...</p>
+      </div>
+    );
   }
 
   // Logged in user sees portal and greeting message
@@ -80,9 +100,11 @@ function App() {
     return (
       <div>
         <h1>Welcome, {currentUser.role}</h1>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     );
   }
+
 
   // Users that have not logged in or don't have saved session see the login portal
   return (
