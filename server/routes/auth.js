@@ -68,7 +68,7 @@ router.get("/me", (req,res) => {
   if (!req.session.employeeID){
     return res.status(401).json({ error: "Not authenticated" });
   }
-  res.json({ employeeID: req.session.employeeID, role: req.session.role })
+  res.json({ employeeID: req.session.employeeID, role: req.session.role, name: req.session.name})
 });
 
 module.exports = router;

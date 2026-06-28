@@ -1,6 +1,8 @@
 import React from 'react';
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import './App.css'
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [email, setEmail] = useState("");
@@ -8,8 +10,28 @@ function App() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_URL = import.meta.env.VITE_API_URL;
+  // Holds logged-in user's information. If null, there is no currently logged-in user
+  const [currentUser, setCurrentUser] = useState(null);
   
+  // Checks to see if still waiting to hear back from /me on initial load
+  const [checkingSession, setCheckingSession] = useState(true);
+
+  // Empty dependency array causes it to run once page loads
+  useEffect(() => {
+    fetch(`${API_URL}/me`, {
+      credentials: "include",
+    })
+    // The fetch doesnt throw error on 401, instead res.ok = false
+    // This needs to be manually set so the catch works
+    .then((res) => {
+      if (!res.ok) throw new Error("Not authenticated");
+      return res.json();
+    })
+    .then((data) => setCurrentUser(data)) // If no error, store session in currentUser
+    .catch(() => setCurrentUser(null)) // If there is an error, set currentUser to null
+    .finally(() => setCheckingSession(false)); // Finish session checking
+  }, []);
+
   async function handleLogin() {
     setError("");
 
@@ -48,6 +70,22 @@ function App() {
     }
   }
 
+  // Only render Loading text while checking for session, instead of login screen flashing for user if signed in already
+  if (checkingSession){
+    return <p>Loading...</p>;
+  }
+
+  // Logged in user sees portal and greeting message
+  if (currentUser){
+    return (
+      <div>
+        <h1>Welcome, {currentUser.name}</h1>
+
+      </div>
+    );
+  }
+
+  // Users that have not logged in or don't have saved session see the login portal
   return (
     <div id="ui-container">
       <section id="display-information">
