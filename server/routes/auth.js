@@ -86,7 +86,7 @@ router.get("/me", async (req,res) => {
     const employee = result.rows[0];
 
     // If employee gets deleted while logged in
-    if (!empolyee){
+    if (!employee){
       return res.status(401).json({ error: "Not authenticated"});
     }
 
