@@ -1,3 +1,9 @@
+// Request comes in
+// Express checks which router handles that URL
+// Router calls the right controller function
+// Controller talks to the database and sends back a response
+// This file is the entry point that wires all those pieces together
+
 const dotenv = require('dotenv').config();
 const express = require('express');
 
@@ -77,10 +83,3 @@ pool.query('SELECT NOW()', (err, res) => {
     console.log('Database connected at:', res.rows[0].now);
   }
 });
-
-
-// Request comes in
-// Express checks which router handles that URL
-// Router calls the right controller function
-// Controller talks to the database and sends back a response
-// This file is the entry point that wires all those pieces together
