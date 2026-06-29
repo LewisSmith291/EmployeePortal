@@ -69,7 +69,7 @@ router.post('/logout', (req,res) => {
   });
 });
 
-router.get("/me", (req,res) => {
+router.get("/me", async (req,res) => {
   // Session check to see if the sesion has an employeeID, as otherwise there is no reason to query database
   if (!req.session.employeeID){
     return res.status(401).json({ error: "Not authenticated" });
