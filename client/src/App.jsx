@@ -1,13 +1,10 @@
-import React from 'react';
 import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import LoginPage from './pages/LoginPage'
 import PortalPage from './pages/PortalPage'
 import EmployeesPage from './pages/EmployeesPage'
-
-// Root of the API - each fetch call appends its own sub-path (e.g. /auth/login, /employees)
-export const API_BASE_URL = import.meta.env.VITE_API_URL;
+import { API_BASE_URL } from './apiBase'
 
 function RequireAuth({ currentUser, children }) {
   if (!currentUser) return <Navigate to="/login" replace />;
