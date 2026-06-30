@@ -121,7 +121,7 @@ function App() {
         <h2>Imaginary Company platform</h2>
       </section>
       <section id="login-fields">
-        <div id="login-container" >
+        <form id="login-container" name="loginForm">
           <div id="gap1" className="gap" style={{height:"5vh"}}></div>
             <div id="heading">
               <h1>Sign in</h1>
@@ -129,14 +129,14 @@ function App() {
             </div>
             <div id="gap2" className="gap"style={{height:"5vh"}}></div>
             <div id="inputs">
-              <p>EMAIL</p>
-              <input id="email" className="text-input" placeholder="Email" type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-              <p>PASSWORD</p>
-              <input id="password" className="text-input" placeholder="Password" type="text" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+              <label htmlFor="email">EMAIL</label>
+              <input id="email" required className="text-input" placeholder="Email" type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+              <label htmlFor="password">PASSWORD</label>
+              <input id="password" required className="text-input" placeholder="Password" type="text" value={password} onChange={(e)=>setPassword(e.target.value)}/>
             </div>
             <div id="buttons">
               <button
-                type="button"
+                type="submit"
                 className="button"
                 onClick={handleLogin}
                 disabled={loading}
@@ -149,7 +149,7 @@ function App() {
               >Forgot Password
               </button>
             </div>
-        </div>
+        </form>
       </section>
     </div>
   )
