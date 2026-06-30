@@ -1,4 +1,4 @@
-const pool = require('../config/db');i
+const pool = require('../config/db');
 // Contains logic for handling requests
 
 // Function for returning list of employees from database
