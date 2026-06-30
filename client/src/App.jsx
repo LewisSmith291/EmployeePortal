@@ -1,30 +1,34 @@
 import React from 'react';
-import { useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
-import passwordShow from "./assets/eye_show.png";
-import passwordHide from "./assets/eye_hide.png";
+import LoginPage from './pages/LoginPage'
+import PortalPage from './pages/PortalPage'
+import EmployeesPage from './pages/EmployeesPage'
 
-const API_URL = import.meta.env.VITE_API_URL;
+// Root of the API - each fetch call appends its own sub-path (e.g. /auth/login, /employees)
+export const API_BASE_URL = import.meta.env.VITE_API_URL;
+
+function RequireAuth({ currentUser, children }) {
+  if (!currentUser) return <Navigate to="/login" replace />;
+  return children;
+}
+
+function RedirectIfAuthed({ currentUser, children }) {
+  if (currentUser) return <Navigate to="/portal" replace />;
+  return children;
+}
 
 function App() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordHidden, setPasswordHidden] = useState(true);
-
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
   // Holds logged-in user's information. If null, there is no currently logged-in user
   const [currentUser, setCurrentUser] = useState(null);
-  
+
   // Checks to see if still waiting to hear back from /me on initial load
   const [checkingSession, setCheckingSession] = useState(true);
 
   // Empty dependency array causes it to run once page loads
   useEffect(() => {
-    // HTTP Request
-    // String url as first parameter, and parameters as second parameter
-    fetch(`${API_URL}/me`, {
+    fetch(`${API_BASE_URL}/auth/me`, {
       credentials: "include",
     })
     // The fetch doesnt throw error on 401, instead res.ok = false
@@ -36,73 +40,47 @@ function App() {
     .then((data) => {
       setCurrentUser(data)
     }) // If no error, store session in currentUser
-    .catch((reason) => {
-      setCurrentUser(null)}) // If there is an error, set currentUser to null
+    .catch(() => {
+      setCurrentUser(null)
+    }) // If there is an error, set currentUser to null
     .finally(() => {
-      setCheckingSession(false)}); // Finish session checking
+      setCheckingSession(false)
+    }); // Finish session checking
   }, []);
 
-  async function handleLogin() {
-    setError("");
+  async function handleLogin(email, password) {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include", // sends/recieves sesison cookie cross origin
+      body: JSON.stringify({ email, password })
+    });
 
-    if(!email || !password){
-      setError("please enter an email and password");
-      return;
+    if (!response.ok) {
+      throw new Error("Invalid email or password");
     }
 
-    setLoading(true);
-
-    try {
-      const response = await fetch(`${API_URL}/login`, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        credentials: "include", // sends/recieves sesison cookie cross origin
-        body: JSON.stringify({email,password})
-      });
-
-      if (!response.ok){
-        // Don't reveal if email or password was wrong
-        setError("Invalid email or password");
-        setLoading(false);
-        return;
-      }
-
-      const data = await response.json();
-      console.log("Logged in as:", data);
-
-      setCurrentUser(data);
-
-      // TODO: redirect to portal home page, or lift this into some app-level "currentUser" state once you have routing set up
-
-    } catch (err) {
-      console.error(err);
-      setError("Something went wrong. Please try again");
-    } finally {
-      setLoading(false);
-    }
+    const data = await response.json();
+    setCurrentUser(data);
+    return data;
   }
-  
-  async function handleLogout(){
+
+  async function handleLogout() {
     try {
-      await fetch(`${API_URL}/logout`,{
+      await fetch(`${API_BASE_URL}/auth/logout`, {
         method: "POST",
-        credentials:"include", 
+        credentials: "include",
       });
-    } catch(err) {
-      console.error("Logout error:",err);
+    } catch (err) {
+      console.error("Logout error:", err);
     } finally {
       // Log out straight away manually whether success or catch so not slow
       setCurrentUser(null);
     }
   }
 
-  function togglePasswordShow(){
-    setPasswordHidden(!passwordHidden);
-
-  }
-
   // Only render Loading text while checking for session, instead of login screen flashing for user if signed in already
-  if (checkingSession){
+  if (checkingSession) {
     return (
       <div id="loading-text-container">
         <p id="loading">Loading...</p>
@@ -110,70 +88,36 @@ function App() {
     );
   }
 
-  // Logged in user sees portal and greeting message
-  if (currentUser){
-    return (
-      <div>
-        <h1>Welcome, <CurrentUser currentUser={currentUser}/></h1>
-        <button onClick={handleLogout}>Logout</button>
-      </div>
-    );
-  }
-
-
-  // Users that have not logged in or don't have saved session see the login portal
   return (
-    <div id="ui-container">
-      <section id="display-information">
-        <div id="profile-picture"></div>
-        <h1>Employee Portal</h1>
-        <h2>Imaginary Company platform</h2>
-      </section>
-      <section id="login-fields">
-        <form id="login-container" name="loginForm">
-          <div id="gap1" className="gap" style={{height:"5vh"}}></div>
-            <div id="heading">
-              <h1>Sign in</h1>
-              <h2>Enter your credentials to access employee portal</h2>
-            </div>
-            <div id="gap2" className="gap"style={{height:"5vh"}}></div>
-            <div id="inputs">
-              <label htmlFor="email">EMAIL</label>
-              <input id="email" required className="text-input" placeholder="Email" type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-              <label htmlFor="password">PASSWORD</label>
-              <div id="password-container" className="password-input-container">
-                <input id="password" required className="password-input-text" placeholder="Password" type={passwordHidden ? "password" : "text"} value={password}
-                  onChange={(e)=>setPassword(e.target.value)}/>
-                <img id="show-password" className="show-password" 
-                  onClick={() => togglePasswordShow()} src={passwordHidden ? passwordHide : passwordShow} alt="Hide Password"/>
-              </div>
-               </div>
-            <div id="buttons">
-              <button
-                type="submit"
-                className="button"
-                onClick={handleLogin}
-                disabled={loading}
-              >{loading ? "Logging in":"Login"}
-              </button>
-              <button
-                type="button"
-                className="button"
-                disabled={loading}
-              >Forgot Password
-              </button>
-            </div>
-        </form>
-      </section>
-    </div>
-  )
-}
-
-function CurrentUser({currentUser}) {
-  if (currentUser){
-    return currentUser.firstName + " " + currentUser.lastName;
-  }
-  return "";
+    <Routes>
+      <Route path="/" element={<Navigate to="/portal" replace />} />
+      <Route
+        path="/login"
+        element={
+          <RedirectIfAuthed currentUser={currentUser}>
+            <LoginPage onLogin={handleLogin} />
+          </RedirectIfAuthed>
+        }
+      />
+      <Route
+        path="/portal"
+        element={
+          <RequireAuth currentUser={currentUser}>
+            <PortalPage currentUser={currentUser} onLogout={handleLogout} />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/employees"
+        element={
+          <RequireAuth currentUser={currentUser}>
+            <EmployeesPage />
+          </RequireAuth>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
 }
 
 export default App
