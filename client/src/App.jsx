@@ -1,12 +1,16 @@
 import React from 'react';
 import { useState, useEffect} from 'react'
 import './App.css'
+import passwordShow from "./assets/eye_show.png";
+import passwordHide from "./assets/eye_hide.png";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordHidden, setPasswordHidden] = useState(true);
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -92,6 +96,11 @@ function App() {
     }
   }
 
+  function togglePasswordShow(){
+    setPasswordHidden(!passwordHidden);
+
+  }
+
   // Only render Loading text while checking for session, instead of login screen flashing for user if signed in already
   if (checkingSession){
     return (
@@ -132,8 +141,13 @@ function App() {
               <label htmlFor="email">EMAIL</label>
               <input id="email" required className="text-input" placeholder="Email" type="text" value={email} onChange={(e)=>setEmail(e.target.value)}/>
               <label htmlFor="password">PASSWORD</label>
-              <input id="password" required className="text-input" placeholder="Password" type="text" value={password} onChange={(e)=>setPassword(e.target.value)}/>
-            </div>
+              <div id="password-container" className="password-input-container">
+                <input id="password" required className="password-input-text" placeholder="Password" type={passwordHidden ? "password" : "text"} value={password}
+                  onChange={(e)=>setPassword(e.target.value)}/>
+                <img id="show-password" className="show-password" 
+                  onClick={() => togglePasswordShow()} src={passwordHidden ? passwordHide : passwordShow} alt="Hide Password"/>
+              </div>
+               </div>
             <div id="buttons">
               <button
                 type="submit"
