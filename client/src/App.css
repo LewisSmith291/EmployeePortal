@@ -117,6 +117,10 @@ p{
   font-size:large;
 }
 
+.error-text{
+  color:#ff6b6b;
+}
+
 #heading,#inputs{
   display:flex;
   flex-direction: column;
