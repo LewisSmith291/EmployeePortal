@@ -3,6 +3,9 @@ import { useState } from 'react';
 import '../portal.css'
 import Header from '../components/Header.jsx'
 import NewsItem from '../components/NewsItem.jsx'
+import logout from "../assets/logout.png";
+import AdminBar from '../components/AdminBar.jsx'
+
 function PortalPage({ currentUser, onLogout }) {
   const navigate = useNavigate();
   const [news, setNews] = useState([]);
@@ -34,11 +37,11 @@ function PortalPage({ currentUser, onLogout }) {
     <div>
       <Header/>
       <h1>Welcome, {currentUser.firstName} {currentUser.lastName}</h1>
-
+      { currentUser.role === "admin" && <AdminBar></AdminBar>}
       <div id="news-container">
         <h1>News</h1>
-        <NewsItem articleName="Exmaple News Item" articleDate="24/10/2026"></NewsItem>
-        <NewsItem articleName="You need to sign something" articileDate="19/11/2026"></NewsItem>
+        <NewsItem articleName="Example News Item" articleDate="24/10/2026"></NewsItem>
+        <NewsItem articleName="You need to sign something" articleDate="19/11/2026"></NewsItem>
       </div>
       {currentUser.role === "admin" && (
         <p><Link to="/portal/admin/employees">View Employees</Link></p>

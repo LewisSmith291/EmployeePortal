@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './header.css'
+import logout from '../assets/logout.png'
 
 
 export default function Header() {
@@ -26,16 +27,17 @@ export default function Header() {
 
   return (
     <header id="header">
-      <div id="profile-picture" onClick={handleHomePress}></div>
+      <div id="profile-picture" onClick={handleHomePress} aria-label="company logo template"></div>
       <nav>
         <ul>
-          <li onClick={handleHomePress}>Home</li>
+          <li aria-label="Home Link" onClick={handleHomePress}>Home</li>
           <div className="separator"/>
-          <li onClick={handleProfilePress}>Employee Profile</li>
-          <li onClick={handleTimeOffPress}>Time Off</li>
-          <li onClick={handlePayslipsPress}>Payslips</li>
+          <li aria-label="Profile Link" onClick={handleProfilePress}>Employee Profile</li>
+          <li aria-label="Time Off Link" onClick={handleTimeOffPress}>Time Off</li>
+          <li aria-label="Payslips Link" onClick={handlePayslipsPress}>Payslips</li>
         </ul>
       </nav>
+      <img id="logout" src={logout} alt="logout-button"></img>
     </header>
   )
 }
