@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import '../portal.css'
+import Header from '../components/Header.jsx'
 function PortalPage({ currentUser, onLogout }) {
   const navigate = useNavigate();
 
@@ -28,17 +29,7 @@ function PortalPage({ currentUser, onLogout }) {
 
   return (
     <div>
-      <header id="portal-header">
-        <div id="portal-profile-picture" onClick={handleHomePress}></div>
-        <nav>
-          <ul>
-            <li onClick={handleHomePress}>Home</li>
-            <li onClick={handleProfilePress}>Employee Profile</li>
-            <li onClick={handleTimeOffPress}>Time Off</li>
-            <li onClick={handlePayslipsPress}>Payslips</li>
-          </ul>
-        </nav>
-      </header>
+      <Header/>
       <h1>Welcome, {currentUser.firstName} {currentUser.lastName}</h1>
       {currentUser.role === "admin" && (
         <p><Link to="/employees">View Employees</Link></p>
