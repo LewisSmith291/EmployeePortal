@@ -1,4 +1,8 @@
 # Employee Portal Project
+| Front-end | Back-end | Database |
+|-----------|----------|----------|
+| ![Static Badge](https://img.shields.io/badge/React-blue) ![Static Badge](https://img.shields.io/badge/Vite-purple) ![Static Badge](https://img.shields.io/badge/Netlify-turquoise)| ![Static Badge](https://img.shields.io/badge/Node.js-green) ![Static Badge](https://img.shields.io/badge/Express.js-black) ![Static Badge](https://img.shields.io/badge/Render-black) | ![Static Badge](https://img.shields.io/badge/PostgreSQL-blue) ![Static Badge](https://img.shields.io/badge/Neon-teal) |
+
 This is a full-stack employee portal built using React, Node.js and PostgreSQL.
 
 https://lewis-smith-employee-portal.netlify.app/login
