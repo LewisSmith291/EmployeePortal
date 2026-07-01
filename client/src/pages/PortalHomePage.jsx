@@ -10,8 +10,8 @@ function PortalPage({ currentUser, onLogout }) {
   }
 
   function handleHomePress(){
-    // replace: true - adds onto stack (/portal/home/specific-thing)
-    // replace: false - replaces route (Will be "/portal")
+    // replace: false - adds onto stack (/portal/home/specific-thing)
+    // replace: true - replaces route (Will be "/portal")
     navigate("/portal", { replace: true });
   }
 
@@ -32,7 +32,7 @@ function PortalPage({ currentUser, onLogout }) {
       <Header/>
       <h1>Welcome, {currentUser.firstName} {currentUser.lastName}</h1>
       {currentUser.role === "admin" && (
-        <p><Link to="/employees">View Employees</Link></p>
+        <p><Link to="/portal/admin/employees">View Employees</Link></p>
       )}
       <button onClick={handleLogoutClick}>Logout</button>
     </div>

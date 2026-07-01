@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import LoginPage from './pages/LoginPage'
-import PortalPage from './pages/PortalPage'
+import PortalHomePage from './pages/PortalHomePage'
 import EmployeesPage from './pages/EmployeesPage'
+import ProfilePage from './pages/ProfilePage'
+import TimeOffPage from './pages/TimeOffPage'
+import PayslipsPage from './pages/PayslipsPage'
 import { API_BASE_URL } from './apiBase'
 
 function RequireAuth({ currentUser, children }) {
@@ -11,8 +14,13 @@ function RequireAuth({ currentUser, children }) {
   return children;
 }
 
+function RequireAdmin({currentUser, children}){
+  if (currentUser?.role !== "admin") return <Navigate to="/portal/home" replace />;
+  return children;
+}
+
 function RedirectIfAuthed({ currentUser, children }) {
-  if (currentUser) return <Navigate to="/portal" replace />;
+  if (currentUser) return <Navigate to="/portal/home" replace />;
   return children;
 }
 
@@ -87,7 +95,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/portal" replace />} />
+      <Route path="/" element={<Navigate to="/portal/home" replace />} />
       <Route
         path="/login"
         element={
@@ -97,18 +105,44 @@ function App() {
         }
       />
       <Route
-        path="/portal"
+        path="/portal/home"
         element={
           <RequireAuth currentUser={currentUser}>
-            <PortalPage currentUser={currentUser} onLogout={handleLogout} />
+            <PortalHomePage currentUser={currentUser} onLogout={handleLogout} />
           </RequireAuth>
         }
       />
       <Route
-        path="/employees"
+        path="/portal/admin/employees"
         element={
           <RequireAuth currentUser={currentUser}>
-            <EmployeesPage />
+            <RequireAdmin currentUser={currentUser}>
+              <EmployeesPage />
+            </RequireAdmin>
+          </RequireAuth>
+        }
+      />
+      <Route 
+        path="/portal/profile"
+        element={
+          <RequireAuth currentUser={currentUser}>
+            <ProfilePage currentUser={currentUser} onLogout={handleLogout} />
+          </RequireAuth>
+        }
+      />
+      <Route 
+        path="/portal/time-off"
+        element={
+          <RequireAuth currentUser={currentUser}>
+            <TimeOffPage currentUser={currentUser} onLogout={handleLogout} />
+          </RequireAuth>
+        }
+      />
+      <Route 
+        path="/portal/payslips"
+        element={
+          <RequireAuth currentUser={currentUser}>
+            <PayslipsPage currentUser={currentUser} onLogout={handleLogout} />
           </RequireAuth>
         }
       />
