@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../components/Header.jsx'
 import { API_BASE_URL } from '../apiBase'
+import '../employees.css'
 
 function EmployeesPage({ onLogout }) {
   const [employees, setEmployees] = useState([]);
