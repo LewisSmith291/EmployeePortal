@@ -1,9 +1,18 @@
 # Employee Portal Project
 This is a full-stack employee portal built using React, Node.js and PostgreSQL.
 
-https://lewis-smith-employee-portal.netlify.app/
+https://lewis-smith-employee-portal.netlify.app/login
 
 [<img src='client/src/assets/Employee_portal_sc.png'>]([client/src/assets/Employee_portal_sc.png](https://github.com/LewisSmith291/EmployeePortal/blob/main/client/src/assets/Employee_portal_sc.png))
+
+# How To Use?
+## Logging In
+Log-in details are saved on a database and are encrypted. If you enter a correct email and password, you are then taken to the portal home page. There is a header allowing the user to visit all of the different pages. There are also extra pages that only admin users can visit, and this is authenticated by checking if the user has the admin role in the database. This is a secure way of checking as the database is unmodifiable for a possible attacker. 
+For the purposes of this demo, there are two logins available: 
+| Email                   | Password         | Role     |
+|-------------------------|------------------|----------|
+| lewissmith@example.com  | TempPassword123! | Admin    |
+| ceryshughes@example.com | SplimFlim123!    | Employee |
 
 # Tech Stack
 To make this application, I have used React, Vite, Node.js, Express, PostgreSQL, Neon, Render and Netlify.
