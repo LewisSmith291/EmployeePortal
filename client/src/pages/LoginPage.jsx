@@ -25,7 +25,7 @@ function LoginPage({ onLogin }) {
 
     try {
       await onLogin(email, password);
-      navigate("/portal", { replace: true });
+      navigate("/portal/home", { replace: true });
     } catch (err) {
       console.error(err);
       // Don't reveal if email or password was wrong

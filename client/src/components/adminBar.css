@@ -3,4 +3,10 @@
   height: 5vh;
   display:flex;
   flex-direction: row;
+  justify-content: space-evenly;
+  background-color: #404040;
+}
+
+Link{
+  
 }

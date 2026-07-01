@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import Header from '../components/Header.jsx'
 import { API_BASE_URL } from '../apiBase'
 
-function EmployeesPage() {
+function EmployeesPage({ onLogout }) {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -22,6 +23,7 @@ function EmployeesPage() {
 
   return (
     <div>
+      <Header onLogout={onLogout}/>
       <p><Link to="/portal">Back to portal</Link></p>
       <h1>Employees</h1>
       {loading && <p>Loading...</p>}

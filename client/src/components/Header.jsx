@@ -1,11 +1,14 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './header.css'
 import logout from '../assets/logout.png'
+import logoutClear from '../assets/logout-clear.png'
+import { useState } from 'react'
 
 
-export default function Header() {
+export default function Header({onLogout}) {
   const navigate = useNavigate();
+  const [logoutHover, setLogoutHover] = useState(logoutClear);
+  const [isClear, setIsClear] = useState("clear");
 
   function handleHomePress(){
     // replace: true - adds onto stack (/portal/home/specific-thing)
@@ -25,6 +28,11 @@ export default function Header() {
     navigate("/portal/payslips", { replace:true });
   }
 
+  async function handleLogout() {
+    await onLogout();
+    navigate("/login", { replace: true });
+  }
+
   return (
     <header id="header">
       <div id="profile-picture" onClick={handleHomePress} aria-label="company logo template"></div>
@@ -37,7 +45,9 @@ export default function Header() {
           <li aria-label="Payslips Link" onClick={handlePayslipsPress}>Payslips</li>
         </ul>
       </nav>
-      <img id="logout" src={logout} alt="logout-button"></img>
+      <img id="logout" className={isClear} onMouseEnter={()=>{setLogoutHover(logoutClear); setIsClear("solid")}} 
+      onMouseLeave={()=>{setLogoutHover(logout); setIsClear("clear")}} src={logoutHover} alt="logout-button"
+      onClick={handleLogout}></img>
     </header>
   )
 }

@@ -117,7 +117,7 @@ function App() {
         element={
           <RequireAuth currentUser={currentUser}>
             <RequireAdmin currentUser={currentUser}>
-              <EmployeesPage />
+              <EmployeesPage onLogout={handleLogout} />
             </RequireAdmin>
           </RequireAuth>
         }

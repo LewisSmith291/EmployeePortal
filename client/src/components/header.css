@@ -4,6 +4,8 @@
   height:10vh;
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 #profile-picture{
@@ -33,7 +35,7 @@ nav ul{
 nav ul li{
   transition: all ease-out 0.25s;
   padding:1vh;
-  border-radius: 0.3rem;
+  border-radius: 0.6rem;
   color: #FFFFFF;
 }
 
@@ -47,9 +49,18 @@ nav ul li:hover{
   height: 5vh;
   width:5vh;
   object-fit: contain;
+  padding:1vw;
+  border-radius: 0.6rem;
 }
 
 #logout:hover{
   cursor: pointer;
-  
+}
+
+.clear{
+  filter:none;
+}
+
+.solid{
+  background-color: #00bfff;
 }

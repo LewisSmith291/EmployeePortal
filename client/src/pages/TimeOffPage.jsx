@@ -1,10 +1,12 @@
-import React from 'react'
 import Header from '../components/Header.jsx'
+import AdminBar from '../components/AdminBar.jsx'
 
-export default function TimeOffPage() {
+
+export default function TimeOffPage({currentUser, onLogout}) {
   return (
     <div>
-      <Header/>
+      <Header onLogout={onLogout}/>
+      <AdminBar currentUser={currentUser}/>
     </div>
   )
 }

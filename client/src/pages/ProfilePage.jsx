@@ -1,10 +1,11 @@
-import React from 'react'
 import Header from '../components/Header.jsx'
+import AdminBar from '../components/AdminBar.jsx'
 
-export default function ProfilePage() {
+export default function ProfilePage({currentUser, onLogout}) {
   return (
     <div>
-      <Header/>
+      <Header onLogout={onLogout}/>
+      <AdminBar currentUser={currentUser}/>
     </div>
   )
 }

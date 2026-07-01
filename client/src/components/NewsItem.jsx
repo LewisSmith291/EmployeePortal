@@ -1,12 +1,8 @@
-import React from 'react'
 import './newsItem.css'
-import { Router,useNavigate } from 'react-router-dom'
-import {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 
-export default function NewsItem({articleID, articleName, articleDate}) {
+export default function NewsItem({ articleName, articleDate }) {
   const navigate = useNavigate();
-
-  const [name, setName] = useState()
 
   function handleNewsLink(){
     navigate("/portal/news/"+articleName, { replace: true });
