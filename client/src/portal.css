@@ -1,0 +1,16 @@
+#news-container{
+  background-color: #303030;
+  padding:2vw;
+}
+
+#news-header{
+  margin:5vw;
+}
+
+#news-container h1:hover{
+  text-decoration: underline;
+  cursor:pointer;
+}
+
+
+

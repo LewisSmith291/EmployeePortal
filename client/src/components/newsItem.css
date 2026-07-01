@@ -1,0 +1,9 @@
+#news-item h1{
+  font-size: 2vw;
+}
+
+#news-header h1:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+

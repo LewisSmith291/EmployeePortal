@@ -1,8 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom'
+import { useState } from 'react';
 import '../portal.css'
 import Header from '../components/Header.jsx'
+import NewsItem from '../components/NewsItem.jsx'
 function PortalPage({ currentUser, onLogout }) {
   const navigate = useNavigate();
+  const [news, setNews] = useState([]);
 
   async function handleLogoutClick() {
     await onLogout();
@@ -31,6 +34,12 @@ function PortalPage({ currentUser, onLogout }) {
     <div>
       <Header/>
       <h1>Welcome, {currentUser.firstName} {currentUser.lastName}</h1>
+
+      <div id="news-container">
+        <h1>News</h1>
+        <NewsItem articleName="Exmaple News Item" articleDate="24/10/2026"></NewsItem>
+        <NewsItem articleName="You need to sign something" articileDate="19/11/2026"></NewsItem>
+      </div>
       {currentUser.role === "admin" && (
         <p><Link to="/portal/admin/employees">View Employees</Link></p>
       )}
