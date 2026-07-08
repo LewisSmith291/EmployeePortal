@@ -2,8 +2,11 @@ import '../portal.css'
 import Header from '../components/Header.jsx'
 import NewsItem from '../components/NewsItem.jsx'
 import AdminBar from '../components/AdminBar.jsx'
+import { useState } from 'react'
 
 function PortalPage({ currentUser, onLogout }) {
+  const [newsItems, setNewsItems] = useState([]);
+
   return (
     <div>
       <Header onLogout={onLogout}/>
@@ -11,8 +14,13 @@ function PortalPage({ currentUser, onLogout }) {
       <h1>Welcome, {currentUser.firstName} {currentUser.lastName}</h1>
       <div id="news-container">
         <h1>News</h1>
-        <NewsItem articleName="Example News Item" articleDate="24/10/2026"></NewsItem>
-        <NewsItem articleName="You need to sign something" articleDate="19/11/2026"></NewsItem>
+        <ul>
+          {newsItems.map((item) => (
+            <li>{item.articleName}</li>
+          ))}
+        </ul>
+        <NewsItem articleName="Example News Item" articleDate="24/10/2026" pending={true}></NewsItem>
+        <NewsItem articleName="You need to sign something" articleDate="19/11/2026" pending={false}></NewsItem>
       </div>
     </div>
   );

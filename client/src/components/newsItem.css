@@ -1,9 +1,35 @@
-#news-item h1{
-  font-size: 2vw;
+#news-item{
+  display: grid;
+  grid-template-columns: 0.4fr 0.1fr 5fr;
+  gap:1vw;
+  margin:1vh;
+  align-items: center;
+  padding:1vh;
+  border-radius: 0.6rem;
 }
 
-#news-header h1:hover{
+#news-item:hover{
+  background-color: grey;
   text-decoration: underline;
   cursor: pointer;
 }
 
+#news-item h1{
+  font-size: 4vh;
+  margin:0;
+}
+
+.pending{
+  background-color: #F08A3A;
+}
+
+.completed{
+  background-color: #0FBF3E;
+}
+
+#pending-icon{
+  width: 3vh;
+  height:3vh;
+  padding:0.5vh;
+  border-radius: 0.6rem;
+}
