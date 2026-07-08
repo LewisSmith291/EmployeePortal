@@ -15,12 +15,13 @@ function PortalPage({ currentUser, onLogout }) {
       <div id="news-container">
         <h1>News</h1>
         <ul>
+          
           {newsItems.map((item) => (
             <li>{item.articleName}</li>
           ))}
+          <NewsItem articleName="Example News Item" articleDate="24/10/2026" pending={true} description={"This is a very brief description of the news item"}></NewsItem>
+          <NewsItem articleName="You need to sign something" articleDate="19/11/2026" pending={false} description={"This is a suuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuper long description about the news item that should trigger an overflow"}></NewsItem>
         </ul>
-        <NewsItem articleName="Example News Item" articleDate="24/10/2026" pending={true}></NewsItem>
-        <NewsItem articleName="You need to sign something" articleDate="19/11/2026" pending={false}></NewsItem>
       </div>
     </div>
   );

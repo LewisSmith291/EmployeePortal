@@ -5,6 +5,7 @@
   flex-direction: row;
   justify-content: space-evenly;
   background-color: #404040;
+  align-items: center;
 }
 
 Link{

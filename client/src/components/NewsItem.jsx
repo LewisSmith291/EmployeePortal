@@ -4,10 +4,8 @@ import { useState } from 'react';
 import Cross from "../assets/cross.svg"
 import Tick from "../assets/tick.svg"
 
-export default function NewsItem({ articleName, articleDate, pending}) {
+export default function NewsItem({ articleName, description, articleDate, pending}) {
   const navigate = useNavigate();
-
-  const [isPending, setIsPending] = useState(pending);
 
   function handleNewsLink(){
     navigate("/portal/news/"+articleName, { replace: true });
@@ -15,9 +13,11 @@ export default function NewsItem({ articleName, articleDate, pending}) {
 
   return (
     <div id="news-item" onClick={handleNewsLink}>
-      <h1>{isPending ? "pending" : "completed"}</h1>
-      <img id="pending-icon" className={isPending ? "pending" : "completed"} src={Cross}/>
-      <h1 id="news-header" >{articleName} by {articleDate}</h1>
+      <h1 className="pending-grid-cell">{pending ? "pending" : "completed"}</h1>
+      <div className="icon-grid-cell"><img id="pending-icon" className={pending ? "pending" : "completed"} src={pending ? Cross : Tick}/></div>
+      <h1 className="title-grid-cell">{articleName}</h1>
+      <h1 className="description-grid-cell">{description}</h1>
+      <h1 className="date-grid-cell">{articleDate}</h1>
     </div>
   )
 }

@@ -1,11 +1,17 @@
 #news-item{
   display: grid;
-  grid-template-columns: 0.4fr 0.1fr 5fr;
-  gap:1vw;
+  grid-template-columns: 1fr 0.5fr 2.5fr 5fr 1fr;
+  gap:0;
   margin:1vh;
   align-items: center;
   padding:1vh;
   border-radius: 0.6rem;
+}
+
+#news-item > *{
+  border: #0FBF3E solid 1px;
+  height:100%;
+  text-align: center;
 }
 
 #news-item:hover{
@@ -15,8 +21,33 @@
 }
 
 #news-item h1{
-  font-size: 4vh;
   margin:0;
+  font-size: 3vh;
+}
+
+.pending-grid-cell{
+  text-align: center;
+}
+
+.icon-grid-cell{
+  text-align: center;
+
+}
+
+.title-grid-cell{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.description-grid-cell{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.date-grid-cell{
+  text-align: center;
 }
 
 .pending{
