@@ -7,5 +7,11 @@
   margin:5vw;
 }
 
+ul{
+  list-style: none;
+  padding-left:0;
+}
 
-
+.news-item{
+  width:95vw;
+}

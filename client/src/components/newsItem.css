@@ -1,17 +1,21 @@
 #news-item{
   display: grid;
   grid-template-columns: 1fr 0.5fr 2.5fr 5fr 1fr;
+  grid-template-columns: 12% max(5%, 4vh) 20% 50% 13%;
   gap:0;
   margin:1vh;
   align-items: center;
   padding:1vh;
   border-radius: 0.6rem;
+  border: #ffffff42 solid 1px;
 }
 
 #news-item > *{
-  border: #0FBF3E solid 1px;
   height:100%;
   text-align: center;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
 
 #news-item:hover{
@@ -21,17 +25,21 @@
 }
 
 #news-item h1{
-  margin:0;
-  font-size: 3vh;
+  margin:0.5vw;
+  font-size: 2vw;
 }
 
 .pending-grid-cell{
   text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .icon-grid-cell{
-  text-align: center;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .title-grid-cell{
@@ -48,6 +56,9 @@
 
 .date-grid-cell{
   text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .pending{
@@ -62,5 +73,5 @@
   width: 3vh;
   height:3vh;
   padding:0.5vh;
-  border-radius: 0.6rem;
+  border-radius: 2rem;
 }
