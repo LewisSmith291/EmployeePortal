@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import './header.css'
-import logout from '../assets/logout.png'
-import logoutClear from '../assets/logout-clear.png'
+import logout from '/images/logout.webp'
+import logoutClear from '/images/logout-clear.webp'
 import { useState } from 'react'
 
 

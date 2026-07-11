@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import passwordShow from "../assets/eye_show.png";
-import passwordHide from "../assets/eye_hide.png";
+import passwordShow from "/images/eye-show.svg";
+import passwordHide from "/images/eye-hide.svg";
 
 function LoginPage({ onLogin }) {
   const navigate = useNavigate();

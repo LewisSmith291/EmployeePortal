@@ -1,8 +1,8 @@
 import './newsItem.css'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
-import Cross from "../assets/cross.svg"
-import Tick from "../assets/tick.svg"
+import Cross from "/images/cross.svg"
+import Tick from "/images/tick.svg"
 
 export default function NewsItem({ articleName, description, articleDate, pending}) {
   const navigate = useNavigate();
